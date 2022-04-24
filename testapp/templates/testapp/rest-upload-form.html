@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>rest upload from</title>
+    <script>
+        const imageUploadForm = () => {
+            const form = $('#uploadForm')
+            form.on('submit', function (e) {
+                e.preventDefault()
+                console.log(this, e);
+                const uploadFiles = $('#uploadFile').prop('files')
+                console.log(uploadFiles)
+                const url = '/api/images'
+                const data = new FormData();
+                data.append('file', uploadFiles[0])
+                const headers = {'content-type': 'multipart/form-data'};
+                axios.post(url, data, {headers}).then((r) => {
+                    console.log(r)
+                }).catch((e) => {
+                    console.log(e)
+                })
+            })
+        }
+    </script>
+</head>
+<body>
+<form id="uploadForm">
+    <label for="uploadFile">Choose a profile picture:</label>
+    <input type="file" id="uploadFile" name="uploadFile"
+           accept="image/png, image/jpeg" multiple>
+    <input type="submit" value="upload file">
+</form>
+</body>
+</html>
